@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Bot Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="login-screen" class="login hidden">
+    <div class="login-box">
+      <div class="logo">🛡️</div>
+      <h1>Security Bot Dashboard</h1>
+      <p>Enter your dashboard access token to monitor your servers.</p>
+      <input type="password" id="token-input" placeholder="Dashboard token" autocomplete="off">
+      <button id="login-btn">Connect</button>
+      <p class="login-error hidden" id="login-error">Invalid token</p>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <aside class="sidebar">
+      <div class="brand">🛡️ <span>Security Bot</span></div>
+      <nav>
+        <button class="nav-btn active" data-view="overview">📊 Overview</button>
+        <button class="nav-btn" data-view="events">📜 Event Feed</button>
+        <button class="nav-btn" data-view="alerts">🚨 Security Alerts</button>
+        <button class="nav-btn" data-view="members">👥 Members</button>
+        <button class="nav-btn" data-view="settings">⚙️ Settings</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="bot-status" id="bot-status">● Offline</div>
+        <button id="logout-btn">Log out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="page-title">Overview</h1>
+          <p class="subtitle" id="uptime">—</p>
+        </div>
+        <div class="guild-select-wrap">
+          <select id="guild-select"></select>
+        </div>
+      </header>
+
+      <section id="view-overview" class="view active">
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-label">Servers</div><div class="stat-value" id="stat-guilds">0</div></div>
+          <div class="stat-card"><div class="stat-label">Total Members</div><div class="stat-value" id="stat-members">0</div></div>
+          <div class="stat-card"><div class="stat-label">Mod Actions (24h)</div><div class="stat-value" id="stat-mod">0</div></div>
+          <div class="stat-card danger"><div class="stat-label">Security Alerts</div><div class="stat-value" id="stat-alerts">0</div></div>
+        </div>
+        <div id="raid-banner" class="raid-banner hidden">
+          🚨 RAID LOCKDOWN ACTIVE <span id="raid-countdown"></span>
+          <button id="raid-end-btn">End Lockdown</button>
+        </div>
+        <div class="panel">
+          <h3>Servers</h3>
+          <div id="guild-cards" class="guild-cards"></div>
+        </div>
+        <div class="panel">
+          <h3>Live Activity</h3>
+          <div id="live-feed" class="feed"></div>
+        </div>
+      </section>
+
+      <section id="view-events" class="view">
+        <div class="panel">
+          <h3>Event Feed</h3>
+          <div id="events-feed" class="feed"></div>
+        </div>
+      </section>
+
+      <section id="view-alerts" class="view">
+        <div class="panel">
+          <h3>Security Alerts</h3>
+          <div id="alerts-feed" class="feed"></div>
+        </div>
+      </section>
+
+      <section id="view-members" class="view">
+        <div class="panel">
+          <h3>Members</h3>
+          <input type="text" id="member-search" class="search" placeholder="Search members...">
+          <div id="members-list" class="members-list"></div>
+        </div>
+      </section>
+
+      <section id="view-settings" class="view">
+        <div id="settings-wrap"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
